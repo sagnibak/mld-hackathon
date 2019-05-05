@@ -14,7 +14,7 @@ L1_UNITS = 40
 OUT_UNITS = 1
 NUM_EPOCHS_MODEL = 1000
 NUM_EPOCHS_R = 1000
-BATCH_SIZE = 256
+BATCH_SIZE = 2048
 NU = 0.002
 
 x_train = get_train_data(mode='mlp')
@@ -52,10 +52,13 @@ def train_model():
         y_hat = model.predict(x_train)
         print('y_hat shape: ', y_hat.shape)
         r = np.quantile(y_hat, NU)
+        
+        if (i + 1) % 10 == 0:
+            model.save(f'models/ckpt_model_0_{i}.h5')
 
     # return the last model
     return model
 
 if __name__ == "__main__":
     final_model = train_model()
-    final_model.save('models/model0.h5')
+    final_model.save('models/final_model0.h5')
