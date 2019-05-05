@@ -10,3 +10,6 @@ models/
 # python caches
 __pycache__/
 *.pyc
+
+# jupyter cache
+.ipynb_checkpoints

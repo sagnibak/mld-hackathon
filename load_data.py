@@ -29,7 +29,7 @@ def gen_test_data(num_pts=1024, mode='mlp'):
     random.shuffle(test_random_idxs)
     train_random_idxs = train_random_idxs[:num_pts // 2]
     test_random_idxs = test_random_idxs[:num_pts - num_pts // 2]
-    test_x_cache = np.empty((num_pts,) + catted_cache.shape[1:])
+    test_x_cache = np.empty((num_pts,) + train_data.shape[1:])
     test_y_cache = np.empty((num_pts,))
     
     test_x_cache[range(len(train_random_idxs))] = train_data[train_random_idxs]
@@ -37,7 +37,7 @@ def gen_test_data(num_pts=1024, mode='mlp'):
 
     x_test = x_test / 127.5 - 1.
 
-    test_x_cache[range(len(test_random_idxs), num_pts)] = x_test[test_random_idxs]
+    test_x_cache[range(len(test_random_idxs), num_pts)] = x_test[test_random_idxs].reshape(-1, 784)
     test_y_cache[range(len(test_random_idxs), num_pts)] = 1  # 1 means anomalous
     
     return test_x_cache, test_y_cache
