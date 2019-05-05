@@ -1,14 +1,15 @@
 from keras.datasets import fashion_mnist
 import numpy as np
+import random
 
 
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 catted_cache = None
+test_cache = None
 
 def get_train_data(mode="mlp"):
     if catted_cache is None:
-        catted_cache = np.concatenate((x_train, x_test), axis=0
-                        ).astype(np.float32)
+        catted_cache = x_train
         catted_cache = catted_cache / 127.5 - 1.
 
     if mode == "cnn":
@@ -18,4 +19,11 @@ def get_train_data(mode="mlp"):
 
 
 def get_test_data():
-    raise NotImplementedError("Need to generate testing data somehow")
+    if test_cache is None:
+        test_cache = catted_cache
+
+        for i in range(len(x_test)):
+            random_index = random.randint(0, len(test_cache))
+            test_cache = np.insert(test_cache, random_index, x_test[i], axis = 0)
+
+    return test_cache
