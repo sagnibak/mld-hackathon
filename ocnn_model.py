@@ -36,7 +36,7 @@ def train_model():
         print(f'Epoch: {i}, r: {r}')
         early_stopping = EarlyStopping(monitor='loss', patience=5,
                                        restore_best_weights=True)
-        tensorboard = TensorBoard(log_dir=f'logdir/run{i}')
+        tensorboard = TensorBoard(log_dir=f'logdir1/run{i}')
 
         # optimize the model for the given value of `r`
         model = make_model()

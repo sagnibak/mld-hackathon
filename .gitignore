@@ -2,7 +2,7 @@
 .vscode/
 
 # tensorboard logdir
-logdir/
+logdir*/
 
 # saved models
 models/
