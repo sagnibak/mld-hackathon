@@ -4,6 +4,8 @@ from keras.models import Model
 from keras.layers import Input, Dense
 from keras.regularizers import l2
 
+import numpy as np
+
 from load_data import get_train_data
 from losses import make_ocnn_obj
 
@@ -20,10 +22,10 @@ x_train = get_train_data(mode='mlp')
 def make_model():
     img_in = Input(shape=(x_train.shape[1:]), dtype='float32')
     layer1 = Dense(L1_UNITS, activation='sigmoid', use_bias=False,
-                kernel_regularizer=l2())
+                kernel_regularizer=l2())(img_in)
     # linear activation for the output
     model_out = Dense(OUT_UNITS, use_bias=False,
-                      kernel_regularizer=l2())
+                      kernel_regularizer=l2())(layer1)
     return Model(img_in, model_out)
 
 def train_model():
@@ -38,6 +40,7 @@ def train_model():
 
         # optimize the model for the given value of `r`
         model = make_model()
+        # model.summary()
         model.compile('adam', loss=make_ocnn_obj(NU, r))
         model.fit(x=x_train, y=None,
                 batch_size=BATCH_SIZE,
