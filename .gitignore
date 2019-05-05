@@ -1,2 +1,8 @@
 # vscode
 .vscode/
+
+# tensorboard logdir
+logdir/
+
+# saved models
+models/
