@@ -6,6 +6,7 @@ import random
 catted_cache = None
 
 def get_train_data(mode="mlp"):
+    global catted_cache
     if catted_cache is None:
         catted_cache = x_train
         catted_cache = catted_cache / 127.5 - 1.
@@ -13,7 +14,7 @@ def get_train_data(mode="mlp"):
     if mode == "cnn":
         return catted_cache
     if mode == "mlp":
-        return catted_cache.reshape(60000, 784)
+        return catted_cache.reshape(60_000, 784)
 
 
 def get_test_data():

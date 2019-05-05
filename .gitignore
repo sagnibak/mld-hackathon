@@ -1,2 +1,11 @@
 # vscode
 .vscode/
+
+# tensorboard logdir
+logdir/
+
+# saved models
+models/
+
+# python cache
+__pycache__/
