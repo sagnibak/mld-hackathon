@@ -7,5 +7,6 @@ logdir/
 # saved models
 models/
 
-# python cache
+# python caches
 __pycache__/
+*.pyc
