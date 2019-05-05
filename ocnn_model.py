@@ -22,10 +22,10 @@ x_train = get_train_data(mode='mlp')
 def make_model():
     img_in = Input(shape=(x_train.shape[1:]), dtype='float32')
     layer1 = Dense(L1_UNITS, activation='sigmoid', use_bias=True,
-                kernel_regularizer=l2())(img_in)
+                kernel_regularizer=l2(0.5), bias_regularizer=l2(0.5))(img_in)
     # linear activation for the output
     model_out = Dense(OUT_UNITS, use_bias=True,
-                      kernel_regularizer=l2())(layer1)
+                      kernel_regularizer=l2(0.5), bias_regularizer=l2(0.5))(layer1)
     return Model(img_in, model_out)
 
 def train_model():
@@ -36,7 +36,7 @@ def train_model():
         print(f'Epoch: {i}, r: {r}')
         early_stopping = EarlyStopping(monitor='loss', patience=5,
                                        restore_best_weights=True)
-        tensorboard = TensorBoard(log_dir=f'logdir3/run{i}')
+        tensorboard = TensorBoard(log_dir=f'logdir4/run{i}')
 
         # optimize the model for the given value of `r`
         model = make_model()
@@ -54,17 +54,17 @@ def train_model():
         print('y_hat shape: ', y_hat.shape)
 
         # save r
-        with open('r3.csv', 'a+') as f:
+        with open('r4.csv', 'a+') as f:
             f.write(f'{i}, {r}\n')
 
         r = np.quantile(y_hat, NU)
         
         if (i + 1) % 10 == 0:
-            model.save(f'models/ckpt_model_3_{i}.h5')
+            model.save(f'models/ckpt_model_4_{i}.h5')
 
     # return the last model
     return model
 
 if __name__ == "__main__":
     final_model = train_model()
-    final_model.save('models/final_model3.h5')
+    final_model.save('models/final_model4.h5')
